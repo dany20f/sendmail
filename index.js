@@ -1,10 +1,13 @@
 
 const express = require('express');
 const { Resend } = require('resend');
+const cors = require('cors'); // Importa el middleware de CORS
 
 const app = express();
 const resend = new Resend('re_Fp5ZZciF_P9XX2tat9WqLt8UdVAiepW1p');
 
+// Usa el middleware de CORS
+app.use(cors());
 
 
 app.use(express.urlencoded({ extended: true }));
