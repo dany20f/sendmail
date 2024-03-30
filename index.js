@@ -1,17 +1,17 @@
-
 const express = require('express');
 const { Resend } = require('resend');
-
+const cors = require('cors'); // Importa el middleware de CORS
 
 const app = express();
 const resend = new Resend('re_Fp5ZZciF_P9XX2tat9WqLt8UdVAiepW1p');
 
+// Middleware de CORS
+app.use(cors());
 
+// Parsea las solicitudes con cuerpo codificado
 app.use(express.urlencoded({ extended: true }));
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
 
+// Ruta para enviar el formulario de correo
 app.post('/enviar-correo', async (req, res) => {
   const { introducir_nombre, introducir_email, introducir_telefono, introducir_asunto, introducir_mensaje } = req.body;
 
@@ -36,7 +36,13 @@ app.post('/enviar-correo', async (req, res) => {
   }
 });
 
-const PORT = 3000;
+// Ruta para servir el formulario HTML
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+// Puerto dinámico para Vercel
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor Express escuchando en el puerto ${PORT}`);
 });
