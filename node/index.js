@@ -36,11 +36,13 @@ app.post('/enviar-correo', async (req, res) => {
   }
 });
 
-// Ruta para servir el formulario HTML
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
+// Ruta para abrir el formulario HTML
+const path = require('path');
 
+app.get('/', (req, res) => {
+    const indexPath = path.join(__dirname, '..', 'index.html');
+    res.sendFile(indexPath);
+});
 // Puerto dinámico para Vercel
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
